@@ -1,0 +1,146 @@
+body {
+  margin: 0;
+  font-family: Verdana, sans-serif;
+}
+
+header {
+  display: flex;
+  padding: 0 16px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 22px;
+  line-height: 64px;
+}
+
+.sp-menu {
+  margin-left: auto;
+}
+
+.sp-menu #open {
+  font-size: 32px;
+  line-height: 64px;
+  cursor: pointer;
+}
+
+.sp-menu #open.hide {
+  display: none;
+}
+
+main {
+  padding: 0 16px;
+}
+
+.overlay {
+  position: fixed;
+  /* 全画面で配置する */
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  /* 半透明の白 */
+  background: rgba(255, 255, 255, 0.95);
+  text-align: center;
+  padding: 64px;
+  opacity: 0;
+  /* ポインターの動作を無効化し、透明のoverlayの下にあるテキストを選択できるようにする */
+  pointer-events: none;
+  /* フワッとアニメーションさせる設定 */
+  transition: opacity .6s;
+}
+
+.overlay.show {
+  opacity: 1;
+  /* pointer-eventを規定値に戻し、Menuの上でカーソルがポインターになるようにする */
+  pointer-events: auto;
+}
+
+.overlay #close {
+  /* 右上に絶対配置 */
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 32px;
+  cursor: pointer;
+}
+
+.overlay ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.overlay li {
+  margin-top: 24px;
+  /* 最初は非表示。*/
+  opacity: 0;
+  /* 下から上に現れるようにしたいので最初の位置を16px下に設定。 */
+  transform: translateY(16px);
+}
+
+.overlay.show li {
+    /* showクラスが付いたら表示される設定。*/
+  opacity: 1;
+  /* opacityとtransitionはそれぞれ0.3秒でアニメーションさせる */
+  transform: none;
+  transition: opacity .3s, transform .3s;
+}
+
+/* それぞれのアイテムが順番に表示されるようにしたいので、それぞれにdelayを付ける
+ */
+ .overlay.show li:nth-child(1) {
+  transition-delay: .1s;
+ }
+
+ .overlay.show li:nth-child(2) {
+  transition-delay: .2s;
+ }
+
+ .overlay.show li:nth-child(3) {
+  transition-delay: .3s;
+ }
+
+
+ /* pc-menuは600pxより狭い時はpc-menuを表示させない */
+ .pc-menu {
+  display: none;
+ }
+
+ /* メディアクエリの設定 */
+ /* 幅600px以上になったらpc-menuが表示されるようにする */
+ @media (min-width: 600px) {
+  .pc-menu {
+    display: block;
+    /* 右に寄せる */
+    margin-left: auto;
+  }
+
+  /* pc-menuの先頭の黒丸を消し、ulの子要素を横並びにする */
+  .pc-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    /* ulの中の子要素を横並びにする */
+    display: flex;
+  }
+
+  /* a要素のクリックできる範囲を広げ、文字を中央揃えにする。ロゴと高さを合わせ、テキストを中央揃え*/
+  .pc-menu a {
+    display: block;
+    width: 80px;
+    /* 高さをLOGOと合わせる */
+    line-height: 64px;
+    text-align: center;
+  }
+
+  /* pc-menuにホバーした時に色を付ける */
+  .pc-menu a:hover {
+    background: #f2f2f2;
+  }
+
+   /* 幅600px以上になった時はsp-menuを表示させない */
+  .sp-menu {
+    display: none;
+  }
+}
